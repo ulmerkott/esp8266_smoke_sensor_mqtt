@@ -1,0 +1,7 @@
+# Sensors for esp8266_smoke_sensor to be used in Home Assistant
+
+- platform: mqtt
+  name: Smoke sensor value
+  unit_of_measurement: 'air quality'
+  state_topic: "sensors/smoke/current_value"
+  value_template: "{{ value|int }}"
