@@ -36,3 +36,6 @@
 
 # PlatformIo
 .pio/
+
+# Secrets
+.secret_ota_key
