@@ -79,7 +79,7 @@ bool mqtt_reconnect() {
 
             // Once connected, publish an announcement...
             char *message = new char[16 + strlen(HOSTNAME) + 1];
-            strcpy(message, "p1 meter alive: ");
+            strcpy(message, "smoke sensor alive: ");
             strcat(message, HOSTNAME);
             mqtt_client.publish("hass/status", message);
 
@@ -119,6 +119,7 @@ void send_metric(String name, long metric)
 }
 
 void send_data_to_broker() {
+    LAST_UPDATE_SENT = millis();
     send_metric("current_value", CURRENT_SMOKE_SENSOR_DATA);
 }
 
@@ -238,6 +239,12 @@ void read_smoke_sensor_data() {
 void setup() {
     // Configure EEPROM
     EEPROM.begin(512);
+
+    // Setup a hw serial connection
+    Serial.begin(BAUD_RATE, SERIAL_8N1, SERIAL_FULL);
+    Serial.println("");
+    Serial.println("Swapping UART0 RX to inverted");
+    Serial.flush();
 
     Serial.println("Serial port is ready to recieve.");
 
