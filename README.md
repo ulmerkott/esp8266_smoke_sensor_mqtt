@@ -4,7 +4,7 @@ Software for the ESP2866 that sends MQ135 smoke sensor data to an mqtt broker (w
 # Getting started
 This setup requires:
 - An esp8266 (d1 mini have been tested)
-- A MQ135 smoke detector sensor
+- A MQ-2 smoke detector sensor
 
 Compiling up using Arduino IDE:
 - Ensure you have selected the right board
