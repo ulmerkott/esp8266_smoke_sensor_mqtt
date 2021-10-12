@@ -2,7 +2,6 @@
 #include <EEPROM.h>
 #include <DNSServer.h>
 #include <ESP8266WiFi.h>
-#include <Ticker.h>
 #include <WiFiManager.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
@@ -11,9 +10,6 @@
 #include <SoftwareSerial.h>
 
 #include "settings.h"
-
-// Initiate led blinker library
-Ticker ticker;
 
 // Initiate WIFI client
 WiFiClient espClient;
@@ -32,20 +28,6 @@ void configModeCallback(WiFiManager *myWiFiManager) {
 
     // If you used auto generated SSID, print it
     Serial.println(myWiFiManager->getConfigPortalSSID());
-
-    // Entered config mode, make led toggle faster
-    ticker.attach(0.2, tick);
-}
-
-// **********************************
-// * Ticker (System LED Blinker)    *
-// **********************************
-
-// Blink on-board Led
-void tick() {
-    // Toggle state
-    int state = digitalRead(LED_BUILTIN);    // * Get the current state of GPIO1 pin
-    digitalWrite(LED_BUILTIN, !state);       // * Set pin to the opposite state
 }
 
 // **********************************
@@ -248,11 +230,9 @@ void setup() {
 
     Serial.println("Serial port is ready to recieve.");
 
-    // Set led pin as output
+    // Disable blue LED by setting GPIO2 HIGH.
     pinMode(LED_BUILTIN, OUTPUT);
-
-    // Start ticker with 0.5 because we start in AP mode and try to connect
-    ticker.attach(0.6, tick);
+    digitalWrite(LED_BUILTIN, HIGH);
 
     // Get MQTT Server settings
     String settings_available = read_eeprom(134, 1);
@@ -320,10 +300,6 @@ void setup() {
 
     // If you get here you have connected to the WiFi
     Serial.println(F("Connected to WIFI..."));
-
-    // Keep LED on
-    ticker.detach();
-    digitalWrite(LED_BUILTIN, LOW);
 
     // Configure OTA
     setup_ota();
