@@ -31,4 +31,8 @@ char MQTT_PASS[32] = "";
 
 // Smoke sensor
 const int SMOKE_SENSOR_PIN = A0;
+
+// Avoid initial spike in sensor data
+const int SMOKE_SENSOR_STARTUP_TIME_MS = 10000; 
+
 int CURRENT_SMOKE_SENSOR_DATA = 0;

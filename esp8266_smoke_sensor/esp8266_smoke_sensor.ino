@@ -333,7 +333,8 @@ void loop() {
         mqtt_client.loop();
     }
     
-    if (now - LAST_UPDATE_SENT > UPDATE_INTERVAL) {
+    if (now > SMOKE_SENSOR_STARTUP_TIME_MS
+        && (now - LAST_UPDATE_SENT > UPDATE_INTERVAL)) {
         read_smoke_sensor_data();
     }
 }
