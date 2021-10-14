@@ -206,8 +206,9 @@ void setup_mdns() {
 
 void read_smoke_sensor_data() {
     int new_data = analogRead(SMOKE_SENSOR_PIN);
-    if (new_data == CURRENT_SMOKE_SENSOR_DATA) {
-        return;
+    int diff = new_data - CURRENT_SMOKE_SENSOR_DATA;
+    if (abs(diff) < SMOKE_SENSOR_DELTA_THESHOLD) {
+      return;
     }
     CURRENT_SMOKE_SENSOR_DATA = new_data;
     Serial.printf("Got new smoke data: %d\n", CURRENT_SMOKE_SENSOR_DATA);

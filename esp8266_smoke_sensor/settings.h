@@ -33,6 +33,9 @@ char MQTT_PASS[32] = "";
 const int SMOKE_SENSOR_PIN = A0;
 
 // Avoid initial spike in sensor data
-const int SMOKE_SENSOR_STARTUP_TIME_MS = 10000; 
+const int SMOKE_SENSOR_STARTUP_TIME_MS = 10000;
+
+// Only update if new sensor data differs to the previous value more than this threshold
+const int SMOKE_SENSOR_DELTA_THESHOLD = 5;
 
 int CURRENT_SMOKE_SENSOR_DATA = 0;
